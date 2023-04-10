@@ -1,6 +1,6 @@
 # dreamy-vscode-neovim-config
 
-This contains my nvim config files for use with vscdoe-neovim. I started having difficulties with Neovim plugins and dependencies partially applying to both Neovim and VSCode Neovim even when only one config or the other was trying to use them. So now I have 3 repos for this kind of thing. One is all my othe dotfiles. The other is for systems that will only use Neovim through VSCode, and the other is for systems that will only use Neovim without VSCode.
+This contains my nvim config files for use with vscdoe-neovim. I started having difficulties with Neovim plugins and dependencies partially applying to both Neovim and VSCode Neovim even when only one config or the other was trying to use them. So now I have 3 repos for this kind of thing. One is all my other dotfiles. The other is for systems that will only use Neovim through VSCode, and the other is for systems that will only use Neovim without VSCode.
 
 I don't recommend anyone try to install and use this config as is, it is probably more useful as inspiration for your own, or if you just want to see my config.
 
