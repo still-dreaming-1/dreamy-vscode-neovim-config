@@ -42,7 +42,7 @@ normalMap('<leader>v', '<C-v>')
 
 normalMap( -- use VSCode search and replace feature with word under cursor
    '<leader>*',
-   [[<Cmd>call VSCodeNotify('workbench.view.search')<CR>]]
+   "<Cmd>call VSCodeNotify('workbench.action.findInFiles', { 'query': expand('<cword>') })<CR>"
 )
 -- VS Code "Go to Definition" (same as Ctrl + Click)
 normalMap('<leader>]', [[<Cmd>call VSCodeNotify('editor.action.revealDefinition')<CR>]])
