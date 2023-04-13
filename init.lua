@@ -5,6 +5,7 @@ v.g.mapleader = ' '
 v.o.ignorecase = true
 v.o.smartcase = true
 v.o.timeout = false
+v.o.clipboard = 'unnamedplus' -- yank and paste to/from clipboard
 
 function normalMap(left, right)
    v.keymap.set('n', left, right)
@@ -25,6 +26,11 @@ end
 function selectOnlyMap(left, right)
    v.keymap.set('s', left, right)
 end
+
+--visualAndSelectMap('<C-c>', '<Nop>')
+--insertMap('<C-c>', '<Nop>')
+--visualAndSelectMap('<C-c>', 'p')
+--vim.cmd('vnoremap "+y "+y')
 
 insertMap(
    '<esc>',
