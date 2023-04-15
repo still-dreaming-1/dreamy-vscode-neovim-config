@@ -37,7 +37,7 @@ insertMap(
    [[<Cmd>call VSCodeNotify('editor.action.inlineSuggest.hide')<CR><esc>]]
 )
 
--- don't need control key (which can interfere with VSCode) to get into blockwise visual mode
+-- don't need control key to get into blockwise visual mode
 normalMap('<leader>v', '<C-v>')
 
 normalMap( -- use VSCode search and replace feature with word under cursor
