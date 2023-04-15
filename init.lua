@@ -27,11 +27,6 @@ function selectOnlyMap(left, right)
    v.keymap.set('s', left, right)
 end
 
---visualAndSelectMap('<C-c>', '<Nop>')
---insertMap('<C-c>', '<Nop>')
---visualAndSelectMap('<C-c>', 'p')
---vim.cmd('vnoremap "+y "+y')
-
 insertMap(
    '<esc>',
    [[<Cmd>call VSCodeNotify('editor.action.inlineSuggest.hide')<CR><esc>]]
