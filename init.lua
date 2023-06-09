@@ -118,6 +118,8 @@ normalMap('<leader><leader>r', [[<Cmd>call VSCodeNotify('workbench.action.tasks.
 
 normalMap('<leader><leader>l', [[<Cmd>call VSCodeNotify('workbench.action.tasks.runTask', 'lint')<CR>]])
 
+normalMap('<leader><leader>a', [[<Cmd>call VSCodeNotify('workbench.action.tasks.runTask', 'all')<CR>]])
+
 --[===[
 -- lua alternative to ":" (enter lua code instead of vimscript)
 normalMap('<leader>i', ':lua ')
