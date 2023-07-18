@@ -120,6 +120,12 @@ normalMap('<leader><leader>l', [[<Cmd>call VSCodeNotify('workbench.action.tasks.
 
 normalMap('<leader><leader>a', [[<Cmd>call VSCodeNotify('workbench.action.tasks.runTask', 'all')<CR>]])
 
+-- toggle is checkbox (inside Todo+ TODO file)
+normalMap('<leader><leader>j', [[<Cmd>call VSCodeNotify('todo.toggleBox')<CR>]])
+
+-- toggle is complete/checked (inside Todo+ TODO file)
+normalMap('<leader><leader>k', [[<Cmd>call VSCodeNotify('todo.toggleDone')<CR>]])
+
 --[===[
 -- lua alternative to ":" (enter lua code instead of vimscript)
 normalMap('<leader>i', ':lua ')
