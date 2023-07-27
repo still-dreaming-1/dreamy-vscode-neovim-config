@@ -120,11 +120,44 @@ normalMap('<leader><leader>l', [[<Cmd>call VSCodeNotify('workbench.action.tasks.
 
 normalMap('<leader><leader>a', [[<Cmd>call VSCodeNotify('workbench.action.tasks.runTask', 'all')<CR>]])
 
+-- oppen TODO file (for Todo+ VSCode extension)
+normalMap('<leader>i', [[<Cmd>call VSCodeNotify('todo.open')<CR>]])
+
 -- toggle is checkbox (inside Todo+ TODO file)
 normalMap('<leader><leader>j', [[<Cmd>call VSCodeNotify('todo.toggleBox')<CR>]])
 
 -- toggle is complete/checked (inside Todo+ TODO file)
 normalMap('<leader><leader>k', [[<Cmd>call VSCodeNotify('todo.toggleDone')<CR>]])
+
+function toggleTodoBox()
+   local line = vim.api.nvim_get_current_line()
+   local firstNonWhitespaceIndex = string.find(line, "%S")
+   if firstNonWhitespaceIndex == nil then
+      v.cmd([[call VSCodeNotify('todo.toggleBox')]]) -- changes to an unchecked box
+      return
+   end
+   -- Get up to 3 bytes starting from the first non-whitespace character because both "☐" and "✔" are 3 bytes
+   local firstNonWhitespaceChar = string.sub(line, firstNonWhitespaceIndex, firstNonWhitespaceIndex + 2)
+   if firstNonWhitespaceChar == '☐' then
+      v.cmd([[call VSCodeNotify('todo.toggleDone')]]) -- changes to checked box
+   elseif firstNonWhitespaceChar == '✔' then
+      -- this first one has to be blocking, so it finishes before the next one starts:
+      v.cmd([[call VSCodeCall('todo.toggleBox')]]) -- changes to an unchecked box (blocking call)
+
+      v.cmd([[call VSCodeNotify('todo.toggleBox')]]) -- changes to no box
+   else -- no box
+      v.cmd([[call VSCodeNotify('todo.toggleBox')]]) -- changes to unchecked box
+   end
+end
+
+-- modify/toggle mapping. For now used to toggle todo box (used by VSCode Todo+ extension). In the future, will be used
+-- to toggle other things in code files, such as toggling a method from between `private` and `public`
+normalMap('<leader>m', function() toggleTodoBox() end)
+-- change that map to call a Lua function that:
+-- checks to see current state of line ("no box", "unchecked box", "checked box")
+-- if no box, toggle to unchecked box.
+-- if unchecked box, toggle checked box
+-- if checked box, toggle to no box
 
 --[===[
 -- lua alternative to ":" (enter lua code instead of vimscript)
