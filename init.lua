@@ -162,8 +162,8 @@ end
 
 -- modify/toggle mapping. For now used to toggle todo box (used by VSCode Todo+ extension). In the future, will be used
 -- to toggle other things in code files, such as toggling a method from between `private` and `public`
-normalMap('<leader>j', function() toggleTodoBox(true) end)
-normalMap('<leader>k', function() toggleTodoBox(false) end)
+normalMap('<leader>j', function() toggleTodoBox(false) end)
+normalMap('<leader>k', function() toggleTodoBox(true) end)
 
 --[===[
 -- lua alternative to ":" (enter lua code instead of vimscript)
