@@ -94,7 +94,8 @@ normalMap('==', [[<Cmd>call VSCodeNotify('editor.action.reindentselectedlines')<
 visualOnlyMap('=', [[<Cmd>call VSCodeNotifyVisual('editor.action.reindentselectedlines', 0)<CR>]])
 
 -- change o to also use VS Code to auto indent
-normalMap('o', "o<Cmd>call VSCodeNotifyRange('editor.action.reindentselectedlines', line('.'), line('.'), 1)<CR>")
+--normalMap('o', "o<Cmd>call VSCodeNotify('editor.action.reindentselectedlines')<CR>")
+--vim.keymap.set('n', 'o', "o<Cmd>call VSCodeNotify('editor.action.reindentselectedlines')<CR>")
 
 --
 -- change O to also use VS Code to auto indent
