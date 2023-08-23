@@ -91,7 +91,7 @@ normalMap('<leader>;', [[<Cmd>call VSCodeNotify('workbench.action.quickOpenPrevi
 normalMap('==', [[<Cmd>call VSCodeNotify('editor.action.formatSelection')<CR>]])
 
 -- auto format selected lines in visual mode
-visualOnlyMap('=', [[<Cmd>call VSCodeNotify('editor.action.formatSelection')<CR>]])
+visualOnlyMap('=', [[<Cmd>call VSCodeCall('editor.action.formatSelection')<CR><Esc>]])
 
 -- change o to also use VS Code to auto format/indent
 --normalMap('o', "A<CR><Cmd>call VSCodeNotify('editor.action.formatSelection')<CR>")
