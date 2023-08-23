@@ -91,7 +91,7 @@ normalMap('<leader>;', [[<Cmd>call VSCodeNotify('workbench.action.quickOpenPrevi
 normalMap('==', [[<Cmd>call VSCodeNotify('editor.action.reindentselectedlines')<CR>]])
 
 -- auto indent selected lines in visual mode
-visualOnlyMap('=', [[<Cmd>call VSCodeNotifyVisual('editor.action.reindentselectedlines', 0)<CR>]])
+visualOnlyMap('=', [[<Cmd>call VSCodeNotify('editor.action.reindentselectedlines')<CR>]])
 
 -- change o to also use VS Code to auto indent
 --normalMap('o', "o<Cmd>call VSCodeNotify('editor.action.reindentselectedlines')<CR>")
@@ -113,7 +113,7 @@ normalMap('<leader>s', [[<Cmd>call VSCodeNotify('workbench.action.files.save')<C
 normalMap('<leader>z', 'i <esc>')
 
 -- run test-file task
-normalMap('<leader>r', [[<Cmd>call VSCodeNotify('workbench.action.tasks.runTask', 'test-file')<CR>]])
+normalMap('<leader>r', [[<Cmd>call VSCodeNotify('workbench.action.tasks.runTask')<CR>]])
 -- run test task
 normalMap('<leader><leader>r', [[<Cmd>call VSCodeNotify('workbench.action.tasks.runTask', 'test')<CR>]])
 
