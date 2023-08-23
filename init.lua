@@ -87,23 +87,23 @@ normalMap('_', 'm`O<esc>``')
 -- MRU list. J and K will go up and down list. G and GG also work from there
 normalMap('<leader>;', [[<Cmd>call VSCodeNotify('workbench.action.quickOpenPreviousRecentlyUsedEditor')<CR>]])
 
--- auto indent current line
-normalMap('==', [[<Cmd>call VSCodeNotify('editor.action.reindentselectedlines')<CR>]])
+-- auto format current line
+normalMap('==', [[<Cmd>call VSCodeNotify('editor.action.formatSelection')<CR>]])
 
--- auto indent selected lines in visual mode
-visualOnlyMap('=', [[<Cmd>call VSCodeNotify('editor.action.reindentselectedlines')<CR>]])
+-- auto format selected lines in visual mode
+visualOnlyMap('=', [[<Cmd>call VSCodeNotify('editor.action.formatSelection')<CR>]])
 
--- change o to also use VS Code to auto indent
---normalMap('o', "o<Cmd>call VSCodeNotify('editor.action.reindentselectedlines')<CR>")
---vim.keymap.set('n', 'o', "o<Cmd>call VSCodeNotify('editor.action.reindentselectedlines')<CR>")
+-- change o to also use VS Code to auto format/indent
+--normalMap('o', "o<Cmd>call VSCodeNotify('editor.action.formatSelection')<CR>")
+--vim.keymap.set('n', 'o', "o<Cmd>call VSCodeNotify('editor.action.formatSelection')<CR>")
 
 --
--- change O to also use VS Code to auto indent
-normalMap('O', "O<Cmd>call VSCodeNotifyRange('editor.action.reindentselectedlines', line('.'), line('.'), 1)<CR>")
+-- change O to also use VS Code to auto format/indent
+normalMap('O', "O<Cmd>call VSCodeNotifyRange('editor.action.formatSelection', line('.'), line('.'), 1)<CR>")
 
 normalMap(
    '<leader><CR>',
-   'i<CR><Esc><Cmd>call VSCodeCallRange("editor.action.reindentselectedlines", line("."), line("."), 0)<CR><Esc>^'
+   'i<CR><Esc><Cmd>call VSCodeCallRange("editor.action.formatSelection", line("."), line("."), 0)<CR><Esc>^'
 )
 
 -- save
