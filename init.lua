@@ -94,12 +94,12 @@ normalMap('==', [[<Cmd>call VSCodeNotify('editor.action.formatSelection')<CR>]])
 visualOnlyMap('=', [[<Cmd>call VSCodeNotify('editor.action.formatSelection')<CR>]])
 
 -- change o to also use VS Code to auto format/indent
---normalMap('o', "o<Cmd>call VSCodeNotify('editor.action.formatSelection')<CR>")
---vim.keymap.set('n', 'o', "o<Cmd>call VSCodeNotify('editor.action.formatSelection')<CR>")
+--normalMap('o', "A<CR><Cmd>call VSCodeNotify('editor.action.formatSelection')<CR>")
+--vim.keymap.set('n', 'o', "<Cmd>call VSCodeNotify('editor.action.formatSelection')<CR>")
 
 --
 -- change O to also use VS Code to auto format/indent
-normalMap('O', "O<Cmd>call VSCodeNotifyRange('editor.action.formatSelection', line('.'), line('.'), 1)<CR>")
+--normalMap('O', "O<Cmd>call VSCodeNotify('editor.action.formatSelection')<CR>")
 
 normalMap(
    '<leader><CR>',
