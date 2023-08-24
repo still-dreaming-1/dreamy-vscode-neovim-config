@@ -173,8 +173,6 @@ normalMap('<leader>k', function() toggleTodoBox(true) end)
 -- lua alternative to ":" (enter lua code instead of vimscript)
 normalMap('<leader>i', ':lua ')
 
--- pasting in visual mode will yank what you just pasted so it does overwritten by what was pasted over(breaks specifying register, but I don't use them)
-visualOnlyMap('p', 'pgvygv<esc>')
 -- use to unhighlight/unsearch the last search term. You can hit n to re-search/highlight the search term
 --v.keymap.set(
 --    'n',
