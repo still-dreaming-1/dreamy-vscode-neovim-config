@@ -24,8 +24,11 @@ function visualOnlyMap(left, right)
 end
 
 function selectOnlyMap(left, right)
-   v.keymap.set('s', left, right)
+    v.keymap.set('s', left, right)
 end
+
+-- prevents register from getting overwritten/changed when you visually select some text and then p over it
+visualOnlyMap('p', 'P')
 
 insertMap(
    '<esc>',
