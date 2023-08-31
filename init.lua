@@ -99,6 +99,17 @@ visualOnlyMap('=', [[<Cmd>call VSCodeCall('editor.action.formatSelection')<CR><E
 -- change o to also use VS Code to auto format/indent
 --normalMap('o', "A<CR><Cmd>call VSCodeNotify('editor.action.formatSelection')<CR>")
 --vim.keymap.set('n', 'o', "<Cmd>call VSCodeNotify('editor.action.formatSelection')<CR>")
+v.keymap.set(
+   'n',
+   'o',
+   function ()
+      v.api.nvim_feedkeys('o', 'n', false)
+      v.defer_fn(
+         function() v.fn.VSCodeNotify('editor.action.reindentselectedlines') end,
+         1
+      )
+   end
+)
 
 --
 -- change O to also use VS Code to auto format/indent
