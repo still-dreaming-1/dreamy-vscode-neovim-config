@@ -111,9 +111,20 @@ v.keymap.set(
    end
 )
 
---
+
 -- change O to also use VS Code to auto format/indent
 --normalMap('O', "O<Cmd>call VSCodeNotify('editor.action.formatSelection')<CR>")
+v.keymap.set(
+   'n',
+   'O',
+   function ()
+      v.api.nvim_feedkeys('O', 'n', false)
+      v.defer_fn(
+         function() v.fn.VSCodeNotify('editor.action.reindentselectedlines') end,
+         1
+      )
+   end
+)
 
 normalMap(
    '<leader><CR>',
