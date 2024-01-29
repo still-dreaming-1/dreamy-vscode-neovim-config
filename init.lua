@@ -40,8 +40,7 @@ insertMap(
 -- don't need control key to get into blockwise visual mode
 normalMap('<leader>v', '<C-v>')
 
-v.keymap.set( -- use VSCode search and replace feature with word under cursor
-  'n',
+normalMap( -- use VSCode search and replace feature with word under cursor
   '<leader>*',
   function()
     vscode.action(
