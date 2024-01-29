@@ -1,4 +1,6 @@
 local v = vim
+local vscode = require('vscode-neovim')
+
 v.g.mapleader = ' '
 
 -- make searching easier
@@ -7,23 +9,23 @@ v.o.smartcase = true
 v.o.timeout = false
 v.o.clipboard = 'unnamedplus' -- yank and paste to/from clipboard
 
-function normalMap(left, right)
+local function normalMap(left, right)
    v.keymap.set('n', left, right)
 end
 
-function insertMap(left, right)
+local function insertMap(left, right)
    v.keymap.set('i', left, right)
 end
 
-function visualAndSelectMap(left, right)
+local function visualAndSelectMap(left, right)
    v.keymap.set('v', left, right)
 end
 
-function visualOnlyMap(left, right)
+local function visualOnlyMap(left, right)
    v.keymap.set('x', left, right)
 end
 
-function selectOnlyMap(left, right)
+local function selectOnlyMap(left, right)
     v.keymap.set('s', left, right)
 end
 
@@ -38,15 +40,24 @@ insertMap(
 -- don't need control key to get into blockwise visual mode
 normalMap('<leader>v', '<C-v>')
 
-normalMap( -- use VSCode search and replace feature with word under cursor
-   '<leader>*',
-   "<Cmd>call VSCodeNotify('workbench.action.findInFiles', { 'query': expand('<cword>') })<CR>"
+v.keymap.set( -- use VSCode search and replace feature with word under cursor
+  'n',
+  '<leader>*',
+  function()
+    vscode.action(
+      'workbench.action.findInFiles',
+      { args = { query = v.fn.expand('<cword>') } }
+    )
+  end
 )
--- VS Code "Go to Definition" (same as Ctrl + Click)
-normalMap('<leader>]', [[<Cmd>call VSCodeNotify('editor.action.revealDefinition')<CR>]])
+
+normalMap( -- VS Code "Go to Definition" (same as Ctrl + Click)
+  '<leader>]',
+  "<Cmd>lua require('vscode-neovim').action('editor.action.revealDefinition')<CR>"
+)
 
 -- close current editor file
-normalMap('<leader>d', [[<Cmd>call VSCodeNotify('workbench.action.closeActiveEditor')<CR>]])
+normalMap('<leader>d', [[<Cmd>lua require('vscode-neovim').action('workbench.action.closeActiveEditor')<CR>]])
 
 -- go to smart start of line
 v.keymap.set(
