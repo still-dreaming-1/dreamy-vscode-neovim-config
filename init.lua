@@ -80,17 +80,17 @@ visualOnlyMap( -- go to end of line
 -- show/focus the file explorer side panel
 normalMap(
    '<leader>t',
-   [[<Cmd>call VSCodeNotify('workbench.view.explorer')<CR>]]
+   [[<Cmd>lua require('vscode-neovim').action('workbench.view.explorer')<CR>]]
 )
 
 -- show/focus terminal
-normalMap('<leader><leader>t', [[<Cmd>call VSCodeNotify('terminal.focus')<CR>]])
+normalMap('<leader><leader>t', [[<Cmd>lua require('vscode-neovim').action('terminal.focus')<CR>]])
 --
 -- show/focus terminal
-normalMap('<leader>f', [[<Cmd>call VSCodeNotify('workbench.action.quickOpen')<CR>]])
+normalMap('<leader>f', [[<Cmd>lua require('vscode-neovim').action('workbench.action.quickOpen')<CR>]])
 
 -- use VSCode search and replace
-normalMap('<leader>/', [[<Cmd>call VSCodeNotify('workbench.action.findInFiles')<CR>]])
+normalMap('<leader>/', [[<Cmd>lua require('vscode-neovim').action('workbench.action.findInFiles')<CR>]])
 
 -- create new line below current line without leaving normal mode or moving cursor
 normalMap('-', 'm`o<esc>``')
@@ -99,24 +99,24 @@ normalMap('-', 'm`o<esc>``')
 normalMap('_', 'm`O<esc>``')
 
 -- MRU list. J and K will go up and down list. G and GG also work from there
-normalMap('<leader>;', [[<Cmd>call VSCodeNotify('workbench.action.quickOpenPreviousRecentlyUsedEditor')<CR>]])
+normalMap('<leader>;', [[<Cmd>lua require('vscode-neovim').action('workbench.action.quickOpenPreviousRecentlyUsedEditor')<CR>]])
 
 -- auto format current line
-normalMap('==', [[<Cmd>call VSCodeNotify('editor.action.formatSelection')<CR>]])
+normalMap('==', [[<Cmd>lua require('vscode-neovim').action('editor.action.formatSelection')<CR>]])
 
 -- auto format selected lines in visual mode
-visualOnlyMap('=', [[<Cmd>call VSCodeCall('editor.action.formatSelection')<CR><Esc>]])
+visualOnlyMap('=', [[<Cmd>lua require('vscode-neovim').call('editor.action.formatSelection')<CR><Esc>]])
 
 -- change o to also use VS Code to auto format/indent
---normalMap('o', "A<CR><Cmd>call VSCodeNotify('editor.action.formatSelection')<CR>")
---vim.keymap.set('n', 'o', "<Cmd>call VSCodeNotify('editor.action.formatSelection')<CR>")
+--normalMap('o', "A<CR><Cmd>lua require('vscode-neovim').action('editor.action.formatSelection')<CR>")
+--vim.keymap.set('n', 'o', "<Cmd>lua require('vscode-neovim').action('editor.action.formatSelection')<CR>")
 v.keymap.set(
    'n',
    'o',
    function ()
       v.api.nvim_feedkeys('o', 'n', false)
       v.defer_fn(
-         function() v.fn.VSCodeNotify('editor.action.reindentselectedlines') end,
+         function() vscode.action('editor.action.reindentselectedlines') end,
          1
       )
    end
@@ -124,14 +124,14 @@ v.keymap.set(
 
 
 -- change O to also use VS Code to auto format/indent
---normalMap('O', "O<Cmd>call VSCodeNotify('editor.action.formatSelection')<CR>")
+--normalMap('O', "O<Cmd>lua require('vscode-neovim').action('editor.action.formatSelection')<CR>")
 v.keymap.set(
    'n',
    'O',
    function ()
       v.api.nvim_feedkeys('O', 'n', false)
       v.defer_fn(
-         function() v.fn.VSCodeNotify('editor.action.reindentselectedlines') end,
+         function() vscode.action('editor.action.reindentselectedlines') end,
          1
       )
    end
@@ -143,31 +143,31 @@ normalMap(
 )
 
 -- save
-normalMap('<leader>s', [[<Cmd>call VSCodeNotify('workbench.action.files.save')<CR>]])
+normalMap('<leader>s', [[<Cmd>lua require('vscode-neovim').action('workbench.action.files.save')<CR>]])
 
 -- add a space
 normalMap('<leader>z', 'i <esc>')
 
 -- run test-file task
-normalMap('<leader>r', [[<Cmd>call VSCodeNotify('workbench.action.tasks.runTask')<CR>]])
+normalMap('<leader>r', [[<Cmd>lua require('vscode-neovim').action('workbench.action.tasks.runTask')<CR>]])
 -- run test task
-normalMap('<leader><leader>r', [[<Cmd>call VSCodeNotify('workbench.action.tasks.runTask', 'test')<CR>]])
+normalMap('<leader><leader>r', [[<Cmd>lua require('vscode-neovim').action('workbench.action.tasks.runTask', 'test')<CR>]])
 
-normalMap('<leader><leader>l', [[<Cmd>call VSCodeNotify('workbench.action.tasks.runTask', 'lint')<CR>]])
+normalMap('<leader><leader>l', [[<Cmd>lua require('vscode-neovim').action('workbench.action.tasks.runTask', 'lint')<CR>]])
 
-normalMap('<leader><leader>a', [[<Cmd>call VSCodeNotify('workbench.action.tasks.runTask', 'all')<CR>]])
+normalMap('<leader><leader>a', [[<Cmd>lua require('vscode-neovim').action('workbench.action.tasks.runTask', 'all')<CR>]])
 
 -- oppen TODO file (for Todo+ VSCode extension)
-normalMap('<leader>i', [[<Cmd>call VSCodeNotify('todo.open')<CR>]])
+normalMap('<leader>i', [[<Cmd>lua require('vscode-neovim').action('todo.open')<CR>]])
 
-function toggleTodoBox(reverse)
+local function toggleTodoBox(reverse)
    local line = v.api.nvim_get_current_line()
    local firstNonWhitespaceIndex = string.find(line, "%S")
    if firstNonWhitespaceIndex == nil then
       if reverse then
-         v.cmd([[call VSCodeNotify('todo.toggleDone')]]) -- changes to checked box
+         v.cmd([[lua require('vscode-neovim').action('todo.toggleDone')]]) -- changes to checked box
       else
-         v.cmd([[call VSCodeNotify('todo.toggleBox')]]) -- changes to an unchecked box
+         v.cmd([[lua require('vscode-neovim').action('todo.toggleBox')]]) -- changes to an unchecked box
       end
       return
    end
@@ -175,24 +175,24 @@ function toggleTodoBox(reverse)
    local firstNonWhitespaceChar = string.sub(line, firstNonWhitespaceIndex, firstNonWhitespaceIndex + 2)
    if firstNonWhitespaceChar == '☐' then
       if reverse then
-         v.cmd([[call VSCodeNotify('todo.toggleBox')]]) -- changes to no box
+         v.cmd([[lua require('vscode-neovim').action('todo.toggleBox')]]) -- changes to no box
       else
-         v.cmd([[call VSCodeNotify('todo.toggleDone')]]) -- changes to checked box
+         v.cmd([[lua require('vscode-neovim').action('todo.toggleDone')]]) -- changes to checked box
       end
    elseif firstNonWhitespaceChar == '✔' then
       if reverse then
-         v.cmd([[call VSCodeNotify('todo.toggleDone')]]) -- changes to unchecked box
+         v.cmd([[lua require('vscode-neovim').action('todo.toggleDone')]]) -- changes to unchecked box
       else
          -- this first one has to be blocking, so it finishes before the next one starts:
-         v.cmd([[call VSCodeCall('todo.toggleBox')]]) -- changes to an unchecked box (blocking call)
+         v.cmd([[lua require('vscode-neovim').call('todo.toggleBox')]]) -- changes to an unchecked box (blocking call)
 
-         v.cmd([[call VSCodeNotify('todo.toggleBox')]]) -- changes to no box
+         v.cmd([[lua require('vscode-neovim').action('todo.toggleBox')]]) -- changes to no box
       end
    else -- no box
       if reverse then
-         v.cmd([[call VSCodeNotify('todo.toggleDone')]]) -- changes to checked box
+         v.cmd([[lua require('vscode-neovim').action('todo.toggleDone')]]) -- changes to checked box
       else
-         v.cmd([[call VSCodeNotify('todo.toggleBox')]]) -- changes to unchecked box
+         v.cmd([[lua require('vscode-neovim').action('todo.toggleBox')]]) -- changes to unchecked box
       end
    end
 end
