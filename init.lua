@@ -10,31 +10,31 @@ v.o.timeout = false
 v.o.clipboard = 'unnamedplus' -- yank and paste to/from clipboard
 
 local function normalMap(left, right)
-   v.keymap.set('n', left, right)
+  v.keymap.set('n', left, right)
 end
 
 local function insertMap(left, right)
-   v.keymap.set('i', left, right)
+  v.keymap.set('i', left, right)
 end
 
 local function visualAndSelectMap(left, right)
-   v.keymap.set('v', left, right)
+  v.keymap.set('v', left, right)
 end
 
 local function visualOnlyMap(left, right)
-   v.keymap.set('x', left, right)
+  v.keymap.set('x', left, right)
 end
 
 local function selectOnlyMap(left, right)
-    v.keymap.set('s', left, right)
+  v.keymap.set('s', left, right)
 end
 
 -- prevents register from getting overwritten/changed when you visually select some text and then p over it
 visualOnlyMap('p', 'P')
 
 insertMap(
-   '<esc>',
-   [[<Cmd>call VSCodeNotify('editor.action.inlineSuggest.hide')<CR><esc>]]
+  '<esc>',
+  [[<Cmd>call VSCodeNotify('editor.action.inlineSuggest.hide')<CR><esc>]]
 )
 
 -- don't need control key to get into blockwise visual mode
@@ -60,26 +60,26 @@ normalMap('<leader>d', [[<Cmd>lua require('vscode-neovim').action('workbench.act
 
 -- go to smart start of line
 v.keymap.set(
-   {'n', 'x'}, -- normal and visual (only) mode
-   '<leader>h',
-   '^'
+  { 'n', 'x' }, -- normal and visual (only) mode
+  '<leader>h',
+  '^'
 )
 
 v.keymap.set( -- go to end of line
-   {'n', 'o'},
-   '<leader>l',
-   '$'
+  { 'n', 'o' },
+  '<leader>l',
+  '$'
 )
 
 visualOnlyMap( -- go to end of line
-   '<leader>l',
-   '$h' -- the "h" prevents it from selecting the newline character
+  '<leader>l',
+  '$h'         -- the "h" prevents it from selecting the newline character
 )
 
 -- show/focus the file explorer side panel
 normalMap(
-   '<leader>t',
-   [[<Cmd>lua require('vscode-neovim').action('workbench.view.explorer')<CR>]]
+  '<leader>t',
+  [[<Cmd>lua require('vscode-neovim').action('workbench.view.explorer')<CR>]]
 )
 
 -- show/focus terminal
@@ -98,7 +98,8 @@ normalMap('-', 'm`o<esc>``')
 normalMap('_', 'm`O<esc>``')
 
 -- MRU list. J and K will go up and down list. G and GG also work from there
-normalMap('<leader>;', [[<Cmd>lua require('vscode-neovim').action('workbench.action.quickOpenPreviousRecentlyUsedEditor')<CR>]])
+normalMap('<leader>;',
+  [[<Cmd>lua require('vscode-neovim').action('workbench.action.quickOpenPreviousRecentlyUsedEditor')<CR>]])
 
 -- auto format current line
 normalMap('==', [[<Cmd>lua require('vscode-neovim').action('editor.action.formatSelection')<CR>]])
@@ -110,35 +111,35 @@ visualOnlyMap('=', [[<Cmd>lua require('vscode-neovim').call('editor.action.forma
 --normalMap('o', "A<CR><Cmd>lua require('vscode-neovim').action('editor.action.formatSelection')<CR>")
 --vim.keymap.set('n', 'o', "<Cmd>lua require('vscode-neovim').action('editor.action.formatSelection')<CR>")
 v.keymap.set(
-   'n',
-   'o',
-   function ()
-      v.api.nvim_feedkeys('o', 'n', false)
-      v.defer_fn(
-         function() vscode.action('editor.action.reindentselectedlines') end,
-         1
-      )
-   end
+  'n',
+  'o',
+  function()
+    v.api.nvim_feedkeys('o', 'n', false)
+    v.defer_fn(
+      function() vscode.action('editor.action.reindentselectedlines') end,
+      1
+    )
+  end
 )
 
 
 -- change O to also use VS Code to auto format/indent
 --normalMap('O', "O<Cmd>lua require('vscode-neovim').action('editor.action.formatSelection')<CR>")
 v.keymap.set(
-   'n',
-   'O',
-   function ()
-      v.api.nvim_feedkeys('O', 'n', false)
-      v.defer_fn(
-         function() vscode.action('editor.action.reindentselectedlines') end,
-         1
-      )
-   end
+  'n',
+  'O',
+  function()
+    v.api.nvim_feedkeys('O', 'n', false)
+    v.defer_fn(
+      function() vscode.action('editor.action.reindentselectedlines') end,
+      1
+    )
+  end
 )
 
 normalMap(
-   '<leader><CR>',
-   'i<CR><Esc><Cmd>call VSCodeCallRange("editor.action.formatSelection", line("."), line("."), 0)<CR><Esc>^'
+  '<leader><CR>',
+  'i<CR><Esc><Cmd>call VSCodeCallRange("editor.action.formatSelection", line("."), line("."), 0)<CR><Esc>^'
 )
 
 -- save
@@ -160,40 +161,40 @@ normalMap('<leader><leader>a', [[<Cmd>lua require('vscode-neovim').action('workb
 normalMap('<leader>i', [[<Cmd>lua require('vscode-neovim').action('todo.open')<CR>]])
 
 local function toggleTodoBox(reverse)
-   local line = v.api.nvim_get_current_line()
-   local firstNonWhitespaceIndex = string.find(line, "%S")
-   if firstNonWhitespaceIndex == nil then
-      if reverse then
-         v.cmd([[lua require('vscode-neovim').action('todo.toggleDone')]]) -- changes to checked box
-      else
-         v.cmd([[lua require('vscode-neovim').action('todo.toggleBox')]]) -- changes to an unchecked box
-      end
-      return
-   end
-   -- Get up to 3 bytes starting from the first non-whitespace character because both "☐" and "✔" are 3 bytes
-   local firstNonWhitespaceChar = string.sub(line, firstNonWhitespaceIndex, firstNonWhitespaceIndex + 2)
-   if firstNonWhitespaceChar == '☐' then
-      if reverse then
-         v.cmd([[lua require('vscode-neovim').action('todo.toggleBox')]]) -- changes to no box
-      else
-         v.cmd([[lua require('vscode-neovim').action('todo.toggleDone')]]) -- changes to checked box
-      end
-   elseif firstNonWhitespaceChar == '✔' then
-      if reverse then
-         v.cmd([[lua require('vscode-neovim').action('todo.toggleDone')]]) -- changes to unchecked box
-      else
-         -- this first one has to be blocking, so it finishes before the next one starts:
-         v.cmd([[lua require('vscode-neovim').call('todo.toggleBox')]]) -- changes to an unchecked box (blocking call)
+  local line = v.api.nvim_get_current_line()
+  local firstNonWhitespaceIndex = string.find(line, "%S")
+  if firstNonWhitespaceIndex == nil then
+    if reverse then
+      v.cmd([[lua require('vscode-neovim').action('todo.toggleDone')]])    -- changes to checked box
+    else
+      v.cmd([[lua require('vscode-neovim').action('todo.toggleBox')]])     -- changes to an unchecked box
+    end
+    return
+  end
+  -- Get up to 3 bytes starting from the first non-whitespace character because both "☐" and "✔" are 3 bytes
+  local firstNonWhitespaceChar = string.sub(line, firstNonWhitespaceIndex, firstNonWhitespaceIndex + 2)
+  if firstNonWhitespaceChar == '☐' then
+    if reverse then
+      v.cmd([[lua require('vscode-neovim').action('todo.toggleBox')]])     -- changes to no box
+    else
+      v.cmd([[lua require('vscode-neovim').action('todo.toggleDone')]])    -- changes to checked box
+    end
+  elseif firstNonWhitespaceChar == '✔' then
+    if reverse then
+      v.cmd([[lua require('vscode-neovim').action('todo.toggleDone')]])    -- changes to unchecked box
+    else
+      -- this first one has to be blocking, so it finishes before the next one starts:
+      v.cmd([[lua require('vscode-neovim').call('todo.toggleBox')]])       -- changes to an unchecked box (blocking call)
 
-         v.cmd([[lua require('vscode-neovim').action('todo.toggleBox')]]) -- changes to no box
-      end
-   else -- no box
-      if reverse then
-         v.cmd([[lua require('vscode-neovim').action('todo.toggleDone')]]) -- changes to checked box
-      else
-         v.cmd([[lua require('vscode-neovim').action('todo.toggleBox')]]) -- changes to unchecked box
-      end
-   end
+      v.cmd([[lua require('vscode-neovim').action('todo.toggleBox')]])     -- changes to no box
+    end
+  else                                                                     -- no box
+    if reverse then
+      v.cmd([[lua require('vscode-neovim').action('todo.toggleDone')]])    -- changes to checked box
+    else
+      v.cmd([[lua require('vscode-neovim').action('todo.toggleBox')]])     -- changes to unchecked box
+    end
+  end
 end
 
 -- modify/toggle mapping. For now used to toggle todo box (used by VSCode Todo+ extension). In the future, will be used
