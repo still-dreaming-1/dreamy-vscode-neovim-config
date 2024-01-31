@@ -151,11 +151,26 @@ normalMap('<leader>z', 'i <esc>')
 -- run test-file task
 normalMap('<leader>r', [[<Cmd>lua require('vscode-neovim').action('workbench.action.tasks.runTask')<CR>]])
 -- run test task
-normalMap('<leader><leader>r', [[<Cmd>lua require('vscode-neovim').action('workbench.action.tasks.runTask', 'test')<CR>]])
+normalMap(
+  '<leader><leader>r',
+  function()
+    vscode.action('workbench.action.tasks.runTask', { args = { 'test' } })
+  end
+)
 
-normalMap('<leader><leader>l', [[<Cmd>lua require('vscode-neovim').action('workbench.action.tasks.runTask', 'lint')<CR>]])
+normalMap(
+  '<leader><leader>l',
+  function()
+    vscode.action('workbench.action.tasks.runTask', { args = { 'lint' } })
+  end
+)
 
-normalMap('<leader><leader>a', [[<Cmd>lua require('vscode-neovim').action('workbench.action.tasks.runTask', 'all')<CR>]])
+normalMap(
+  '<leader><leader>a',
+  function()
+    vscode.action('workbench.action.tasks.runTask', { args = { 'all' } })
+  end
+)
 
 -- oppen TODO file (for Todo+ VSCode extension)
 normalMap('<leader>i', [[<Cmd>lua require('vscode-neovim').action('todo.open')<CR>]])
