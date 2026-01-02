@@ -81,6 +81,12 @@ visualOnlyMap( -- go to end of line
   '$h'         -- the "h" prevents it from selecting the newline character
 )
 
+-- Swap ' and ` to "default" to column level precision over only line precision. For
+-- example, 'a will now go to the exact position of the mark in a, while `a only
+-- goes to the beginning of that line. '' can also be quite useful while editing a line.
+v.keymap.set({ "n", "x", "o" }, "'", "`")
+v.keymap.set({ "n", "x", "o" }, "`", "'")
+
 -- show/focus the file explorer side panel
 normalMap(
   '<leader><leader>t',
