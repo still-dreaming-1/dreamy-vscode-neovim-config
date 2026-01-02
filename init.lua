@@ -50,7 +50,12 @@ normalMap( -- use VSCode search and replace feature with word under cursor
   end
 )
 
-normalMap( -- VS Code "Go to Definition" (same as Ctrl + Click)
+-- VS Code "Go to Definition" (same as Ctrl + Click)
+normalMap(
+  '<leader>i',
+  "<Cmd>lua require('vscode-neovim').action('editor.action.revealDefinition')<CR>"
+)
+normalMap(
   '<leader>]',
   "<Cmd>lua require('vscode-neovim').action('editor.action.revealDefinition')<CR>"
 )
@@ -78,14 +83,23 @@ visualOnlyMap( -- go to end of line
 
 -- show/focus the file explorer side panel
 normalMap(
-  '<leader>t',
+  '<leader><leader>t',
   [[<Cmd>lua require('vscode-neovim').action('workbench.view.explorer')<CR>]]
 )
 
 -- show/focus terminal
-normalMap('<leader><leader>t', [[<Cmd>lua require('vscode-neovim').action('terminal.focus')<CR>]])
---
--- show/focus terminal
+normalMap('<leader><leader><leader>t', [[<Cmd>lua require('vscode-neovim').action('terminal.focus')<CR>]])
+normalMap(
+  '<leader><leader>r',
+  function()
+    vscode.call('terminal.focus')
+    vscode.action('workbench.action.terminal.sendSequence', { args = {
+      --text = 'haxe build.hxml && hl bin/output.hl "../IDreamY"\n',
+      text = 'haxe build.hxml && hl bin/output.hl -t\n',
+    } })
+    vscode.action('workbench.action.focusActiveEditorGroup')
+  end
+)
 normalMap('<leader>f', [[<Cmd>lua require('vscode-neovim').action('workbench.action.quickOpen')<CR>]])
 
 -- use VSCode search and replace
@@ -150,13 +164,6 @@ normalMap('<leader>z', 'i <esc>')
 
 -- run test-file task
 normalMap('<leader>r', [[<Cmd>lua require('vscode-neovim').action('workbench.action.tasks.runTask')<CR>]])
--- run test task
-normalMap(
-  '<leader><leader>r',
-  function()
-    vscode.action('workbench.action.tasks.runTask', { args = { 'test' } })
-  end
-)
 
 normalMap(
   '<leader><leader>l',
@@ -172,50 +179,26 @@ normalMap(
   end
 )
 
--- oppen TODO file (for Todo+ VSCode extension)
-normalMap('<leader>i', [[<Cmd>lua require('vscode-neovim').action('todo.open')<CR>]])
-
-local function toggleTodoBox(reverse)
-  local line = v.api.nvim_get_current_line()
-  local firstNonWhitespaceIndex = string.find(line, "%S")
-  if firstNonWhitespaceIndex == nil then
-    if reverse then
-      v.cmd([[lua require('vscode-neovim').action('todo.toggleDone')]])    -- changes to checked box
-    else
-      v.cmd([[lua require('vscode-neovim').action('todo.toggleBox')]])     -- changes to an unchecked box
-    end
-    return
+-- "<Cmd>lua require('vscode-neovim').action('editor.action.rename')<CR>"
+normalMap(
+  '<leader>j',
+  function()
+    vscode.action('editor.action.rename')
   end
-  -- Get up to 3 bytes starting from the first non-whitespace character because both "☐" and "✔" are 3 bytes
-  local firstNonWhitespaceChar = string.sub(line, firstNonWhitespaceIndex, firstNonWhitespaceIndex + 2)
-  if firstNonWhitespaceChar == '☐' then
-    if reverse then
-      v.cmd([[lua require('vscode-neovim').action('todo.toggleBox')]])     -- changes to no box
-    else
-      v.cmd([[lua require('vscode-neovim').action('todo.toggleDone')]])    -- changes to checked box
-    end
-  elseif firstNonWhitespaceChar == '✔' then
-    if reverse then
-      v.cmd([[lua require('vscode-neovim').action('todo.toggleDone')]])    -- changes to unchecked box
-    else
-      -- this first one has to be blocking, so it finishes before the next one starts:
-      v.cmd([[lua require('vscode-neovim').call('todo.toggleBox')]])       -- changes to an unchecked box (blocking call)
+)
+normalMap(
+  '<leader>k',
+  "<Cmd>lua require('vscode-neovim').action('editor.action.quickFix')<CR>"
+)
 
-      v.cmd([[lua require('vscode-neovim').action('todo.toggleBox')]])     -- changes to no box
-    end
-  else                                                                     -- no box
-    if reverse then
-      v.cmd([[lua require('vscode-neovim').action('todo.toggleDone')]])    -- changes to checked box
-    else
-      v.cmd([[lua require('vscode-neovim').action('todo.toggleBox')]])     -- changes to unchecked box
-    end
-  end
-end
-
+normalMap(
+  '<leader>t',
+  "^h/function <CR>wve\"ly$h/{<CR>%o<CR>private static function test<ESC>\"lpbftl~hea(): void {<CR>}<ESC>k$b"
+)
 -- modify/toggle mapping. For now used to toggle todo box (used by VSCode Todo+ extension). In the future, will be used
 -- to toggle other things in code files, such as toggling a method from between `private` and `public`
-normalMap('<leader>j', function() toggleTodoBox(false) end)
-normalMap('<leader>k', function() toggleTodoBox(true) end)
+-- normalMap('<leader>j', function() toggleTodoBox(false) end)
+-- normalMap('<leader>k', function() toggleTodoBox(true) end)
 
 --[===[
 -- lua alternative to ":" (enter lua code instead of vimscript)
