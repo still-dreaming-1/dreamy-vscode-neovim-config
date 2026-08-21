@@ -108,6 +108,14 @@ normalMap(
 )
 normalMap('<leader>f', [[<Cmd>lua require('vscode-neovim').action('workbench.action.quickOpen')<CR>]])
 
+-- Only when running inside VS Code
+normalMap(
+  "%",
+  function()
+    vscode.action('editor.action.jumpToBracket')
+  end
+)
+
 -- use VSCode search and replace
 normalMap('<leader>/', [[<Cmd>lua require('vscode-neovim').action('workbench.action.findInFiles')<CR>]])
 
