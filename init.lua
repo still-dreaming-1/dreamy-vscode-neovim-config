@@ -1,5 +1,5 @@
 local v = vim
-local vscode = require('vscode-neovim')
+local vscode = require('vscode')
 
 v.g.mapleader = ' '
 
@@ -53,15 +53,15 @@ normalMap( -- use VSCode search and replace feature with word under cursor
 -- VS Code "Go to Definition" (same as Ctrl + Click)
 normalMap(
   '<leader>i',
-  "<Cmd>lua require('vscode-neovim').action('editor.action.revealDefinition')<CR>"
+  "<Cmd>lua require('vscode').action('editor.action.revealDefinition')<CR>"
 )
 normalMap(
   '<leader>]',
-  "<Cmd>lua require('vscode-neovim').action('editor.action.revealDefinition')<CR>"
+  "<Cmd>lua require('vscode').action('editor.action.revealDefinition')<CR>"
 )
 
 -- close current editor file
-normalMap('<leader>d', [[<Cmd>lua require('vscode-neovim').action('workbench.action.closeActiveEditor')<CR>]])
+normalMap('<leader>d', [[<Cmd>lua require('vscode').action('workbench.action.closeActiveEditor')<CR>]])
 
 -- go to smart start of line
 v.keymap.set(
@@ -90,11 +90,11 @@ v.keymap.set({ "n", "x", "o" }, "`", "'")
 -- show/focus the file explorer side panel
 normalMap(
   '<leader><leader>t',
-  [[<Cmd>lua require('vscode-neovim').action('workbench.view.explorer')<CR>]]
+  [[<Cmd>lua require('vscode').action('workbench.view.explorer')<CR>]]
 )
 
 -- show/focus terminal
-normalMap('<leader><leader><leader>t', [[<Cmd>lua require('vscode-neovim').action('terminal.focus')<CR>]])
+normalMap('<leader><leader><leader>t', [[<Cmd>lua require('vscode').action('terminal.focus')<CR>]])
 normalMap(
   '<leader><leader>r',
   function()
@@ -106,7 +106,7 @@ normalMap(
     vscode.action('workbench.action.focusActiveEditorGroup')
   end
 )
-normalMap('<leader>f', [[<Cmd>lua require('vscode-neovim').action('workbench.action.quickOpen')<CR>]])
+normalMap('<leader>f', [[<Cmd>lua require('vscode').action('workbench.action.quickOpen')<CR>]])
 
 -- Only when running inside VS Code
 normalMap(
@@ -117,7 +117,7 @@ normalMap(
 )
 
 -- use VSCode search and replace
-normalMap('<leader>/', [[<Cmd>lua require('vscode-neovim').action('workbench.action.findInFiles')<CR>]])
+normalMap('<leader>/', [[<Cmd>lua require('vscode').action('workbench.action.findInFiles')<CR>]])
 
 -- create new line below current line without leaving normal mode or moving cursor
 normalMap('-', 'm`o<esc>``')
@@ -127,17 +127,17 @@ normalMap('_', 'm`O<esc>``')
 
 -- MRU list. J and K will go up and down list. G and GG also work from there
 normalMap('<leader>;',
-  [[<Cmd>lua require('vscode-neovim').action('workbench.action.quickOpenPreviousRecentlyUsedEditor')<CR>]])
+  [[<Cmd>lua require('vscode').action('workbench.action.quickOpenPreviousRecentlyUsedEditor')<CR>]])
 
 -- auto format current line
-normalMap('==', [[<Cmd>lua require('vscode-neovim').action('editor.action.formatSelection')<CR>]])
+normalMap('==', [[<Cmd>lua require('vscode').action('editor.action.formatSelection')<CR>]])
 
 -- auto format selected lines in visual mode
-visualOnlyMap('=', [[<Cmd>lua require('vscode-neovim').call('editor.action.formatSelection')<CR><Esc>]])
+visualOnlyMap('=', [[<Cmd>lua require('vscode').call('editor.action.formatSelection')<CR><Esc>]])
 
 -- change o to also use VS Code to auto format/indent
---normalMap('o', "A<CR><Cmd>lua require('vscode-neovim').action('editor.action.formatSelection')<CR>")
---vim.keymap.set('n', 'o', "<Cmd>lua require('vscode-neovim').action('editor.action.formatSelection')<CR>")
+--normalMap('o', "A<CR><Cmd>lua require('vscode').action('editor.action.formatSelection')<CR>")
+--vim.keymap.set('n', 'o', "<Cmd>lua require('vscode').action('editor.action.formatSelection')<CR>")
 v.keymap.set(
   'n',
   'o',
@@ -152,7 +152,7 @@ v.keymap.set(
 
 
 -- change O to also use VS Code to auto format/indent
---normalMap('O', "O<Cmd>lua require('vscode-neovim').action('editor.action.formatSelection')<CR>")
+--normalMap('O', "O<Cmd>lua require('vscode').action('editor.action.formatSelection')<CR>")
 v.keymap.set(
   'n',
   'O',
@@ -171,13 +171,13 @@ normalMap(
 )
 
 -- save
-normalMap('<leader>s', [[<Cmd>lua require('vscode-neovim').action('workbench.action.files.save')<CR>]])
+normalMap('<leader>s', [[<Cmd>lua require('vscode').action('workbench.action.files.save')<CR>]])
 
 -- add a space
 normalMap('<leader>z', 'i <esc>')
 
 -- run test-file task
-normalMap('<leader>r', [[<Cmd>lua require('vscode-neovim').action('workbench.action.tasks.runTask')<CR>]])
+normalMap('<leader>r', [[<Cmd>lua require('vscode').action('workbench.action.tasks.runTask')<CR>]])
 
 normalMap(
   '<leader><leader>l',
@@ -193,7 +193,7 @@ normalMap(
   end
 )
 
--- "<Cmd>lua require('vscode-neovim').action('editor.action.rename')<CR>"
+-- "<Cmd>lua require('vscode').action('editor.action.rename')<CR>"
 normalMap(
   '<leader>j',
   function()
@@ -202,7 +202,7 @@ normalMap(
 )
 normalMap(
   '<leader>k',
-  "<Cmd>lua require('vscode-neovim').action('editor.action.quickFix')<CR>"
+  "<Cmd>lua require('vscode').action('editor.action.quickFix')<CR>"
 )
 
 normalMap(
