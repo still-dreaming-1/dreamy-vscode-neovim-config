@@ -1,1 +1,3 @@
 nvim.code-workspace
+# Headless Neovim validation may write startup warnings here.
+nvim.log
