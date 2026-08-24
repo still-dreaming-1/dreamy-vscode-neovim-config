@@ -167,7 +167,19 @@ v.keymap.set(
 
 normalMap(
   '<leader><CR>',
-  'i<CR><Esc><Cmd>call VSCodeCallRange("editor.action.formatSelection", line("."), line("."), 0)<CR><Esc>^'
+  function()
+    v.cmd('normal! i' .. v.keycode('<CR><Esc>'))
+
+    local currentLine = v.fn.line('.') - 1 -- VS Code lines are zero-based
+    vscode.call(
+      'editor.action.formatSelection',
+      {
+        range = { currentLine, currentLine },
+      }
+    )
+
+    v.cmd('normal! ^')
+  end
 )
 
 -- save
