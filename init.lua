@@ -95,17 +95,6 @@ normalMap(
 
 -- show/focus terminal
 normalMap('<leader><leader><leader>t', [[<Cmd>lua require('vscode').action('terminal.focus')<CR>]])
-normalMap(
-  '<leader><leader>r',
-  function()
-    vscode.call('terminal.focus')
-    vscode.action('workbench.action.terminal.sendSequence', { args = {
-      --text = 'haxe build.hxml && hl bin/output.hl "../IDreamY"\n',
-      text = 'haxe build.hxml && hl bin/output.hl -t\n',
-    } })
-    vscode.action('workbench.action.focusActiveEditorGroup')
-  end
-)
 normalMap('<leader>f', [[<Cmd>lua require('vscode').action('workbench.action.quickOpen')<CR>]])
 
 -- Only when running inside VS Code
