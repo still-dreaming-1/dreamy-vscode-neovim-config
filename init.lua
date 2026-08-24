@@ -34,7 +34,7 @@ visualOnlyMap('p', 'P')
 
 insertMap(
   '<esc>',
-  [[<Cmd>call VSCodeNotify('editor.action.inlineSuggest.hide')<CR><esc>]]
+  [[<Cmd>lua require('vscode').action('editor.action.inlineSuggest.hide')<CR><esc>]]
 )
 
 -- don't need control key to get into blockwise visual mode
@@ -229,7 +229,7 @@ normalMap('<leader>i', ':lua ')
 --)
 
 -- show/focus source control/git view
-normalMap('<leader>g', [[<Cmd>call VSCodeNotify('workbench.view.scm')<CR>]])
+normalMap('<leader>g', [[<Cmd>lua require('vscode').action('workbench.view.scm')<CR>]])
 
 -- move after the next dot character (this should be turned into a custom motion where instead of . you can type
 -- anything you want to move after. This would be the opposite of t
