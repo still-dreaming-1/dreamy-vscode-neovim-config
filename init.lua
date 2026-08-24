@@ -135,33 +135,35 @@ normalMap('==', [[<Cmd>lua require('vscode').action('editor.action.formatSelecti
 -- auto format selected lines in visual mode
 visualOnlyMap('=', [[<Cmd>lua require('vscode').call('editor.action.formatSelection')<CR><Esc>]])
 
--- change o to also use VS Code to auto format/indent
---normalMap('o', "A<CR><Cmd>lua require('vscode').action('editor.action.formatSelection')<CR>")
---vim.keymap.set('n', 'o', "<Cmd>lua require('vscode').action('editor.action.formatSelection')<CR>")
-v.keymap.set(
-  'n',
+-- Enter Insert mode, move VS Code's cursor to the end of the line, then have
+-- VS Code type the newline so its indentation rules are used.
+normalMap(
   'o',
   function()
-    v.api.nvim_feedkeys('o', 'n', false)
-    v.defer_fn(
-      function() vscode.action('editor.action.reindentselectedlines') end,
-      1
-    )
+    vscode.with_insert(function()
+      vscode.call('cursorLineEnd')
+      vscode.call('default:type', { args = { text = '\n' } })
+    end)
   end
 )
 
-
--- change O to also use VS Code to auto format/indent
---normalMap('O', "O<Cmd>lua require('vscode').action('editor.action.formatSelection')<CR>")
-v.keymap.set(
-  'n',
+-- To open above, move VS Code's cursor to the preceding line's end before
+-- typing the newline. There is no preceding line when already on the first.
+normalMap(
   'O',
   function()
-    v.api.nvim_feedkeys('O', 'n', false)
-    v.defer_fn(
-      function() vscode.action('editor.action.reindentselectedlines') end,
-      1
-    )
+    local isFirstLine = v.fn.line('.') == 1
+
+    vscode.with_insert(function()
+      if isFirstLine then
+        vscode.call('editor.action.insertLineBefore')
+        return
+      end
+
+      vscode.call('cursorMove', { args = { to = 'up', by = 'line' } })
+      vscode.call('cursorLineEnd')
+      vscode.call('default:type', { args = { text = '\n' } })
+    end)
   end
 )
 
