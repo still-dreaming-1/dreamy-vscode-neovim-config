@@ -210,7 +210,7 @@ normalMap(
 
 normalMap(
   '<leader>t',
-  "^h/function <CR>wve\"ly$h/{<CR>%o<CR>private static function test<ESC>\"lpbftl~hea(): void {<CR>}<ESC>k$b"
+  "^h/function <CR>wve\"ly$h/{<CR>%o<CR>private static function tst<ESC>\"lpbftl~hea(): void {<CR>}<ESC>k$b"
 )
 -- modify/toggle mapping. For now used to toggle todo box (used by VSCode Todo+ extension). In the future, will be used
 -- to toggle other things in code files, such as toggling a method from between `private` and `public`
